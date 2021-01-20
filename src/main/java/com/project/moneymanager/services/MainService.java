@@ -77,6 +77,23 @@ public class MainService {
             return null;
         }
     }
+    public Income createIncome(Income income) {
+        return incomeRepository.save(income);
+    }
+    public void updateIncome(Income income) {
+        incomeRepository.save(income);
+    }
+    public List<Income> getAllIncomes() {
+        return (List<Income>) incomeRepository.findAll();
+    }
+    public Income findIncome(Long id) {
+        Optional<Income> income = incomeRepository.findById(id);
+        if (income.isPresent()) {
+            return income.get();
+        }else {
+            return null;
+        }
+    }
 
 
 }

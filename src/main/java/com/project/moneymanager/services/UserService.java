@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -51,5 +53,18 @@ public class UserService {
             return false;
 
         return BCrypt.checkpw(password, user.getPassword());
+    }
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
+
+    }
+    public User findUserById(Long id) {
+        Optional<User> u = userRepository.findById(id);
+
+        if(u.isPresent()) {
+            return u.get();
+        } else {
+            return null;
+        }
     }
 }
