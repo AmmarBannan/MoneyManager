@@ -27,6 +27,7 @@ public class Income {
 
     private Long id;
     private int amount;
+    @Size(min = 10, message = "Enter at least 10 Characters...")
     private String description;
     private Date date;
     @Column(updatable=false)

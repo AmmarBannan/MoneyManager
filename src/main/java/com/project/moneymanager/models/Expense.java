@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -21,6 +21,7 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int amount;
+    @Size(min = 10, message = "Enter at least 10 Characters...")
     private String description;
     private Date date;
     @Column(updatable = false)
@@ -97,7 +98,7 @@ public class Expense {
         return plan;
     }
 
-    public void setPlans(Plan plan) {
+    public void setPlan(Plan budget) {
         this.plan = plan;
     }
     @PrePersist

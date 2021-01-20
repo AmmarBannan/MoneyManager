@@ -25,12 +25,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 1, message = "First name can not be empty")
+    @Size(min=3, message="Username must be greater than 3 characters")
     private String username;
+
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9.-]+$", message = "Invalid email pattern")
     private String email;
-    @Size(min = 8, message = "Password must be greater than 8 characters")
+    @Size(min=8, message="Password must be greater than 8 characters")
     private String password;
+    @Size(min=8, message="Password must be greater than 8 characters")
     @Transient
     private String passwordConfirmation;
     @Column(updatable = false)

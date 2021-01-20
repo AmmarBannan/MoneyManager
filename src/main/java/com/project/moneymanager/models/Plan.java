@@ -20,9 +20,9 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int limit;
-    private Date start_date;
-    private Date end_date;
+    private int maxlimit;
+    private Date startdate;
+    private Date enddate;
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -36,11 +36,11 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(int limit, String name, Date start_date, Date end_date) {
-        this.limit = limit;
+    public Plan(String name, int maxlimit, Date startdate, Date enddate) {
         this.name = name;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.maxlimit = maxlimit;
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
 
     public Long getId() {
@@ -51,14 +51,6 @@ public class Plan {
         this.id = id;
     }
 
-    public int getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
     public String getName() {
         return name;
     }
@@ -67,20 +59,28 @@ public class Plan {
         this.name = name;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public int getMaxlimit() {
+        return maxlimit;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setMaxlimit(int maxlimit) {
+        this.maxlimit = maxlimit;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public Date getStartdate() {
+        return startdate;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
+    }
+
+    public Date getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(Date enddate) {
+        this.enddate = enddate;
     }
 
     public Date getCreatedAt() {
