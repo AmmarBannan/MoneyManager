@@ -84,20 +84,33 @@ public class testController {
     }	
 
 
-    
     //creation
-    
-	@RequestMapping(value="/role",method=RequestMethod.POST)
-    public User createrole(@RequestParam(value="name") String name) {
-        return maincont.createrole(name);
+@RequestMapping(value="/role",method=RequestMethod.POST)
+    public Role createrole(@RequestParam(value="name") String name) {
+        Role role=new Role(name);
+        return role;
     }
-	@RequestMapping(value="/role",method=RequestMethod.POST)
-    public User createrole(@RequestParam(value="name") String name) {
-        return maincont.createrole(name);
+    @RequestMapping(value="/plan",method=RequestMethod.POST)
+    public Plan createplan(@RequestParam(value="name") String name,@RequestParam(value="limit") int limit,
+            @RequestParam(value="start_data") Date start_data,@RequestParam(value="end_data") Date end_data,
+            HttpSession session) {
+        if((boolean) session.getAttribute("user")) {
+            User user=userser.findById((Long) session.getAttribute("id"));
+            Plan plan=new Plan(name,limit,start_data,end_data,user);
+            return plan;
+        }
+        return null; 
     }
-	@RequestMapping(value="/role",method=RequestMethod.POST)
-    public User createrole(@RequestParam(value="name") String name) {
-        return maincont.createrole(name);
-    }
+    @RequestMapping(value="/expense",method=RequestMethod.POST)
+     public User createexpense(@RequestParam(value="amount") int amount,@RequestParam(value="description") String description,
+             @RequestParam(value="date") Date date,@RequestParam(value="category") Category category,HttpSession session) {
+            if((boolean) session.getAttribute("user")) {
+                User user=userser.findById((Long) session.getAttribute("id"));
+                Plan plan=
+                Expense exp=new Expense(amount,description,date,plan,category);
+
+            }
+            return null; 
+        }
 
 }
