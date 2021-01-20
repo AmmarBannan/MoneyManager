@@ -20,9 +20,15 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+<<<<<<< HEAD
     private int maxlimit;
     private Date startdate;
     private Date enddate;
+=======
+    private int limitz;
+    private Date start_datez;
+    private Date end_datez;
+>>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -36,11 +42,19 @@ public class Plan {
     public Plan() {
     }
 
+<<<<<<< HEAD
     public Plan(String name, int maxlimit, Date startdate, Date enddate) {
         this.name = name;
         this.maxlimit = maxlimit;
         this.startdate = startdate;
         this.enddate = enddate;
+=======
+    public Plan(int limitz, String name, Date start_datezz, Date end_datez) {
+        this.limitz = limitz;
+        this.name = name;
+        this.start_datez = start_datez;
+        this.end_datez = end_datez;
+>>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     }
 
     public Long getId() {
@@ -51,6 +65,17 @@ public class Plan {
         this.id = id;
     }
 
+<<<<<<< HEAD
+=======
+    public int getlimitz() {
+        return limitz;
+    }
+
+    public void setlimitz(int limitz) {
+        this.limitz = limitz;
+    }
+
+>>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     public String getName() {
         return name;
     }
@@ -59,6 +84,7 @@ public class Plan {
         this.name = name;
     }
 
+<<<<<<< HEAD
     public int getMaxlimit() {
         return maxlimit;
     }
@@ -81,6 +107,22 @@ public class Plan {
 
     public void setEnddate(Date enddate) {
         this.enddate = enddate;
+=======
+    public Date getstart_datez() {
+        return start_datez;
+    }
+
+    public void setstart_datez(Date start_datez) {
+        this.start_datez = start_datez;
+    }
+
+    public Date getend_datez() {
+        return end_datez;
+    }
+
+    public void setend_datez(Date end_datez) {
+        this.end_datez = end_datez;
+>>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     }
 
     public Date getCreatedAt() {
