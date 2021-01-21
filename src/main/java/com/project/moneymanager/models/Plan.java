@@ -1,6 +1,8 @@
 package com.project.moneymanager.models;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,9 @@ public class Plan {
     private Date startdate;
     private Date enddate;
     private int limitz;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date start_datez;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date end_datez;
     @Column(updatable = false)
     private Date createdAt;

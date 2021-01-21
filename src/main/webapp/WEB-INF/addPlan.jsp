@@ -23,14 +23,16 @@
     <p>
         <form:label path="startdate">startdate</form:label>
         <form:errors path="startdate"/>
-        <form:input  path="startdate" type="date" name="begin"
-                     placeholder="dd-mm-yyyy" value=""
+        <form:input  path="startdate" type="date"
+                     placeholder="yyyy-MM-dd"
                      min="1997-01-01" max="2030-12-31"/>
     </p>
     <p>
         <form:label path="enddate">enddate</form:label>
         <form:errors path="enddate"/>
-        <form:input  path="enddate" type="date"/>
+        <form:input  path="enddate" type="date"
+                     placeholder="yyyy-MM-dd"
+                     min="1997-01-01" max="2030-12-31"/>
     </p>
 
     <input type="submit" value="Submit"/>
