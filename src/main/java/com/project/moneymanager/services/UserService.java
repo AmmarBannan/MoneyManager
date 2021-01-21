@@ -4,10 +4,6 @@ package com.project.moneymanager.services;
 import com.project.moneymanager.models.User;
 import com.project.moneymanager.repositories.RoleRepository;
 import com.project.moneymanager.repositories.UserRepository;
-
-import java.util.List;
-import java.util.Optional;
-
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,11 +13,6 @@ import java.util.*;
 
 @Service
 public class UserService {
-<<<<<<< HEAD
-=======
-
-    @Autowired
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -57,33 +48,11 @@ public class UserService {
         return this.userRepository.findByEmail(email);
     }
     public boolean authenticateUser(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        User user = this.userRepository.findByEmail(email);
+        if(user == null)
             return false;
-        }
-        else {
-            if(BCrypt.checkpw(password, user.getPassword())) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
-    
-    public User findUserById(Long id) {
-        Optional<User> u = userRepository.findById(id);
 
-        if(u.isPresent()) {
-            return u.get();
-        }
-        else {
-            return null;
-        }
-    }
-    
-    public List <User> allUser() {
-        return userRepository.findAll();
+        return BCrypt.checkpw(password, user.getPassword());
     }
     public List<User> findAll() {
         return (List<User>) userRepository.findAll();
@@ -98,4 +67,9 @@ public class UserService {
             return null;
         }
     }
+    public User findUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+
 }

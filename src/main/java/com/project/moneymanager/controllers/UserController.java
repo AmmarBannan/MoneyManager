@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -47,6 +49,7 @@ public class UserController {
         if(logout != null) {
             model.addAttribute("logoutMessage", "Logout Successful!");
         }
+
         return "login.jsp";
     }
 
@@ -60,26 +63,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-//    @RequestMapping("/admin")
-//    public String adminPage(Principal principal, Model model) {
-//        String username = principal.getName();
-//        model.addAttribute("currentUser", userService.findByUsername(username));
-//        return "adminPage.jsp";
-//    }
 
-
-    @RequestMapping("/incomes/new")
-    public String newIncome(@ModelAttribute("income") Income income) {
-        return "newIncome.jsp";
-    }
-    @RequestMapping(value="/incomes", method= RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("income") Income income, BindingResult result) {
-        if (result.hasErrors()) {
-            return "newIncome.jsp";
-        } else {
-            mainService.createIncome(income);
-            return "redirect:/incomes";
-        }
-    }
 
 }

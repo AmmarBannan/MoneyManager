@@ -20,15 +20,12 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-<<<<<<< HEAD
     private int maxlimit;
     private Date startdate;
     private Date enddate;
-=======
     private int limitz;
     private Date start_datez;
     private Date end_datez;
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -39,23 +36,16 @@ public class Plan {
     @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY)
     private List<Expense> expenses;
 
-    public Plan() {
-    }
 
-<<<<<<< HEAD
-    public Plan(String name, int maxlimit, Date startdate, Date enddate) {
+    public Plan(){}
+    public Plan(String name, int maxlimit, Date startdate, Date enddate,User user) {
         this.name = name;
         this.maxlimit = maxlimit;
         this.startdate = startdate;
         this.enddate = enddate;
-=======
-    public Plan(int limitz, String name, Date start_datezz, Date end_datez) {
-        this.limitz = limitz;
-        this.name = name;
-        this.start_datez = start_datez;
-        this.end_datez = end_datez;
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
+        this.user =user;
     }
+
 
     public Long getId() {
         return id;
@@ -65,8 +55,7 @@ public class Plan {
         this.id = id;
     }
 
-<<<<<<< HEAD
-=======
+
     public int getlimitz() {
         return limitz;
     }
@@ -75,7 +64,6 @@ public class Plan {
         this.limitz = limitz;
     }
 
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     public String getName() {
         return name;
     }
@@ -84,7 +72,6 @@ public class Plan {
         this.name = name;
     }
 
-<<<<<<< HEAD
     public int getMaxlimit() {
         return maxlimit;
     }
@@ -93,7 +80,7 @@ public class Plan {
         this.maxlimit = maxlimit;
     }
 
-    public Date getStartdate() {
+    public Date getStartdate(){
         return startdate;
     }
 
@@ -106,8 +93,7 @@ public class Plan {
     }
 
     public void setEnddate(Date enddate) {
-        this.enddate = enddate;
-=======
+        this.enddate = enddate;}
     public Date getstart_datez() {
         return start_datez;
     }
@@ -122,7 +108,6 @@ public class Plan {
 
     public void setend_datez(Date end_datez) {
         this.end_datez = end_datez;
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     }
 
     public Date getCreatedAt() {
@@ -166,6 +151,5 @@ public class Plan {
     protected void onUpdate() {
         this.updatedAt = new Date();
     }
-
 
 }

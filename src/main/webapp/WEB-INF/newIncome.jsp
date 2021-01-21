@@ -4,7 +4,8 @@
 
 <a href="/incomes">Dashboard</a>
 <h1>New Song</h1>
-<form:form action="/incomes" method="post" modelAttribute="income">
+<h1>Welcome Page <c:out value="${currentUser.username}"></c:out></h1>
+<form:form action="/incomes/new" method="POST" modelAttribute="income">
     <p>
         <form:label path="amount">Money Amount</form:label>
         <form:errors path="amount"/>

@@ -3,53 +3,17 @@ package com.project.moneymanager.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-=======
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
 
 
-<<<<<<< HEAD
-    private UserDetailsService userDetailsService;
-
-    public WebSecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/registration").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
-    }
-
-
-   @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
-=======
-@Configuration
+//@Configuration
 //@EnableWebSecurity
-public class WebSecurityConfig {
+//public class WebSecurityConfig {
 //extends WebSecurityConfigurerAdapter 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
@@ -65,5 +29,58 @@ public class WebSecurityConfig {
 //                .logout()
 //                .permitAll();
 //    }
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+//        @Bean
+//        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//            return new BCryptPasswordEncoder();
+//        }
+//
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.
+//                    authorizeRequests()
+//                    .antMatchers("/css/**", "/js/**", "/registration").permitAll()
+//                    .anyRequest().authenticated()
+//                    .and()
+//                    .formLogin()
+//                    .loginPage("/login")
+//                    .permitAll()
+//                    .and()
+//                    .logout()
+//                    .permitAll();
+//        }
+//        private UserDetailsService userDetailsService;
+//
+//        public WebSecurityConfig(UserDetailsService userDetailsService) {
+//            this.userDetailsService = userDetailsService;
+//        }
+//
+//    }
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    // add Bcyrpt bean
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.
+                authorizeRequests()
+                .antMatchers("/static/**", "/registration").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+    }
 }

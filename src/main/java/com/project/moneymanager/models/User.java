@@ -56,17 +56,7 @@ public class User {
     }
     
 
-    public User(String username,String email,String password,String passwordConfirmation, List<Role> roles) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.passwordConfirmation = passwordConfirmation;
-		this.roles = roles;
-	}
-
-
-	public User(String username, String email, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
