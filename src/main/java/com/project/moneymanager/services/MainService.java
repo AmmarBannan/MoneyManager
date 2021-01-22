@@ -1,12 +1,15 @@
 package com.project.moneymanager.services;
 
-import com.project.moneymanager.models.Category;
-import com.project.moneymanager.models.Expense;
-import com.project.moneymanager.models.Income;
-import com.project.moneymanager.models.Plan;
+import com.project.moneymanager.models.*;
 import com.project.moneymanager.repositories.*;
+import org.apache.tomcat.util.http.ConcurrentDateFormat;
+import org.eclipse.jdt.internal.compiler.ast.SwitchStatement;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -41,8 +44,9 @@ public class MainService {
         incomeRepository.deleteById(id);
     }
 
-    public void addPlan(Plan plan) {
+    public Plan addPlan(Plan plan) {
         planRepository.save(plan);
+        return plan;
     }
 
     public void deletePlan(Long id) {
@@ -94,6 +98,20 @@ public class MainService {
             return null;
         }
     }
-
+    //connection
+    public Plan findplanbydate(User user, Date d){
+        for(Plan plan:user.getPlans()) {
+            Date a=plan.getStart_datez();
+            Date b=plan.getEnd_datez();
+            // the date in question
+            if(a.compareTo(d) * d.compareTo(b) > 0){
+                return plan;
+            }
+        }
+        return null;
+    }
+    public LocalDate getLocalDate() {
+        return LocalDate.now();
+    }
 
 }

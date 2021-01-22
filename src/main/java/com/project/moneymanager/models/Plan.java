@@ -1,6 +1,7 @@
 package com.project.moneymanager.models;
 
 
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+
 
 @Entity
 @Table(name = "plans")
@@ -22,9 +25,6 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int maxlimit;
-    private Date startdate;
-    private Date enddate;
     private int limitz;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date start_datez;
@@ -36,37 +36,24 @@ public class Plan {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
     @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY)
     private List<Expense> expenses;
 
 
     public Plan(){}
-    public Plan(String name, int maxlimit, Date startdate, Date enddate,User user) {
-        this.name = name;
-        this.maxlimit = maxlimit;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.user =user;
-    }
 
+//    public Plan(String name, int limitz, Date start_datez, Date end_datez, User user) {
+//        this.name = name;
+//        this.limitz = limitz;
+//        this.start_datez = start_datez;
+//        this.end_datez = end_datez;
+//        this.user = user;
+//    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public int getlimitz() {
-        return limitz;
-    }
-
-    public void setlimitz(int limitz) {
-        this.limitz = limitz;
-    }
 
     public String getName() {
         return name;
@@ -76,59 +63,30 @@ public class Plan {
         this.name = name;
     }
 
-    public int getMaxlimit() {
-        return maxlimit;
+    public int getLimitz() {
+        return limitz;
     }
 
-    public void setMaxlimit(int maxlimit) {
-        this.maxlimit = maxlimit;
+    public void setLimitz(int limitz) {
+        this.limitz = limitz;
     }
 
-    public Date getStartdate(){
-        return startdate;
-    }
-
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
-
-    public Date getEnddate() {
-        return enddate;
-    }
-
-    public void setEnddate(Date enddate) {
-        this.enddate = enddate;}
-    public Date getstart_datez() {
+    public Date getStart_datez() {
         return start_datez;
     }
 
-    public void setstart_datez(Date start_datez) {
+    public void setStart_datez(Date start_datez) {
         this.start_datez = start_datez;
     }
 
-    public Date getend_datez() {
+    public Date getEnd_datez() {
         return end_datez;
     }
 
-    public void setend_datez(Date end_datez) {
+    public void setEnd_datez(Date end_datez) {
         this.end_datez = end_datez;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public User getUser() {
         return user;
@@ -155,5 +113,6 @@ public class Plan {
     protected void onUpdate() {
         this.updatedAt = new Date();
     }
+
 
 }

@@ -1,5 +1,7 @@
 package com.project.moneymanager.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import javax.persistence.Column;
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 
@@ -23,6 +27,8 @@ public class Expense {
     private int amount;
     @Size(min = 10, message = "Enter at least 10 Characters...")
     private String description;
+    @Past(message  = "cant be in the future")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date date;
     @Column(updatable = false)
     private Date createdAt;
@@ -40,10 +46,12 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(int amount, String description, Date date) {
+    public Expense(int amount, String description, Date date,Plan plan) {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.plan=plan;
+
     }
 
     public Long getId() {

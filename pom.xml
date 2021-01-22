@@ -67,15 +67,10 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
-=======
-        
->>>>>>> 80f1d6f64dc5908f5bad97e2f28aee73473b75be
     </dependencies>
 
     <build>

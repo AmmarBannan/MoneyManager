@@ -1,27 +1,28 @@
 package com.project.moneymanager.controllers;
 
+import com.project.moneymanager.models.Expense;
 import com.project.moneymanager.models.Income;
 import com.project.moneymanager.models.Plan;
 import com.project.moneymanager.models.User;
 import com.project.moneymanager.services.MainService;
 import com.project.moneymanager.services.UserService;
+import org.hibernate.validator.constraints.Currency;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 @Controller
 public class MainController {
     private final MainService mainService;
     private final UserService userService;
+
 
 
     public MainController(MainService mainService, UserService userService) {
@@ -150,9 +151,9 @@ public class MainController {
     @RequestMapping("/incomes")
     public String homepage(Principal principal, Model model) {
             User user=userService.findUserByUsername(principal.getName());
-            model.addAttribute("plans", user.getPlans());
             model.addAttribute("currentUser", user);
-            model.addAttribute("incomes", user.getIncomes());
+        model.addAttribute("incomes", user.getIncomes());
+        model.addAttribute("plans", user.getPlans());
             return "home.jsp";
     }
 //    @RequestMapping("/incomes/{id}")
@@ -181,17 +182,82 @@ public class MainController {
 
         return "addPlan.jsp";
     }
-//    @RequestMapping("/plan/new")
-//    public String createplan(Principal principal,@Valid@ModelAttribute("plan") Plan plan,BindingResult result, Model model) {
-//        User user=userService.findUserByUsername(principal.getName());
-//        model.addAttribute("user",user);
-//        if (result.hasErrors()) {
-//            return "addplan.jsp";
-//        } else {
-//            Plan oneplan = mainService.addPlan(plan);
-//            oneplan.setUser(user);
-//            mainService.createIncome(newIncome);
-//            return "redirect:/incomes";
-//        }
+
+ @RequestMapping(value="/plan/new", method = RequestMethod.POST)
+ public String createplan(Principal principal,@Valid@ModelAttribute("plan") Plan plan,BindingResult result, Model model) {
+        User user=userService.findUserByUsername(principal.getName());
+        model.addAttribute("user",user);
+        if (result.hasErrors()) {
+            return "addPlan.jsp";
+        } else {
+            plan.setUser(user);
+            Plan oneplan = mainService.addPlan(plan);
+            return "redirect:/incomes";
+        }
+    }
+
+//    @RequestMapping("/expense/new")
+//    public String newexpenses(Principal principal, Model model) {
+//        model.addAttribute("user",userService.findUserByUsername(principal.getName()));
+//        return "addExpense.jsp";
 //    }
+//
+//    @RequestMapping(value="/expense/new", method = RequestMethod.POST)
+//    public String createexpenses(Principal principal,@RequestParam(value="amount") int amount,
+//                                 @RequestParam(value="description") String description,
+//                                 @RequestParam(value="date") Date date,Model model,
+//                                 RedirectAttributes rAttributes) {
+//            User user = userService.findUserByUsername(principal.getName());
+//            Plan plan = mainService.findplanbydate(user, date);
+//
+//            Expense expense = new Expense(amount, description, date, plan);
+//            mainService.addExpense(expense);
+//
+//            return "redirect:/incomes";
+//
+//    }
+    @RequestMapping("/expense/new")
+    public String newexpenses(Principal principal, @ModelAttribute("expense") Expense expense, Model model) {
+        model.addAttribute("user",userService.findUserByUsername(principal.getName()));
+        return "addExpense.jsp";
+    }
+
+    @RequestMapping(value="/expense/new", method = RequestMethod.POST)
+    public String createexpenses(Principal principal,@ModelAttribute("expense") Expense expense) {
+        User user = userService.findUserByUsername(principal.getName());
+//        Plan plan = mainService.findplanbydate(user, expense.getDate());
+        Plan plan=null;
+        for(Plan pland:user.getPlans()) {
+            Date currentDate = new Date();
+            if (currentDate.compareTo(pland.getStart_datez())>0) {
+                plan=pland;
+            }
+        }
+        if(plan==null){return "redirect:/expense/new";}
+        expense.setPlan(plan);
+        mainService.addExpense(expense);
+        return "redirect:/incomes";
+
+    }
+    @RequestMapping("/hestory")
+    public String hestory(Principal principal, Model model) {
+        model.addAttribute("user", userService.findUserByUsername(principal.getName()));
+        List<Plan> plans = userService.findUserByUsername(principal.getName()).getPlans();
+        List<Income> incomes = userService.findUserByUsername(principal.getName()).getIncomes();
+        List<Expense> expenses=null;
+        for (Plan plan : plans) {
+            if(expenses.isEmpty()) {
+                List<Expense> exps = plan.getExpenses();
+            }
+            else{
+                for(Expense i:plan.getExpenses())
+                    expenses.add(i);
+            }
+        }
+        model.addAttribute("user",userService.findUserByUsername(principal.getName()).getIncomes());
+        model.addAttribute("incomes",incomes);
+        model.addAttribute("expenses",expenses);
+        return "hestory.jsp";
+    }
+
 }

@@ -43,8 +43,8 @@
     <c:forEach items="${ plans }" var="plan">
         <tr>
             <td>${ plan.name }</td>
-            <td>${ plan.startdate}  ${ plan.enddate}</td>
-            <td>${ plan.maxlimit}</td>
+            <td>SD/${ plan.start_datez}  ED/${ plan.end_datez}</td>
+            <td>${ plan.limitz}</td>
         </tr>
     </c:forEach>
     </tbody>
