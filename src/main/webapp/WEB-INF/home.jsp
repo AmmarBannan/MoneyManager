@@ -18,6 +18,9 @@
 
 <a href="/incomes/new">Addincome</a>
 <a href="/plan/new">add plan</a>
+<a href="/expense/new">add expense</a>
+<a href="/history">history</a>
+<a href="/category/new">add category</a>
 <table>
     <thead>
         <tr><th>Amount</th><th>description</th><th>date</th></tr>
@@ -49,5 +52,6 @@
     </c:forEach>
     </tbody>
 </table>
+<h2>Total balance:${ balance }</h2>
 </body>
 </html>

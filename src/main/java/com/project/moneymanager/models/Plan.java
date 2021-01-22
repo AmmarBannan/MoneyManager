@@ -1,7 +1,6 @@
 package com.project.moneymanager.models;
 
 
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
 
 
 @Entity

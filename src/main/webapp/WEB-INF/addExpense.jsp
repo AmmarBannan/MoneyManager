@@ -9,23 +9,8 @@
 <body>
 <a href="/incomes">Dashboard</a>
 <h1>Welcome Page <c:out value="${user.username}"></c:out></h1>
-<%--<form th:action="/expense/new" method="post">--%>
-<%--    <div>--%>
-<%--        <label for="amount" id="amount">amount</label>--%>
-<%--        <input type="number" name="amount"/>--%>
-<%--    </div>--%>
-<%--    <div>--%>
-<%--        <label for="description" id="description">description</label>--%>
-<%--        <textarea name="description" id="comment" cols="20" rows="4"></textarea>--%>
-<%--    </div>--%>
-<%--    <div>--%>
-<%--        <span><c:out value="${ error }" /></span>--%>
-<%--        <label id="date" for="date">date</label>--%>
-<%--        <input type="date" name="amount"  />--%>
-<%--    </div>--%>
-<%--    <input type="hidden" value="${_csrf.token}"/>--%>
-<%--    <button>Send</button>--%>
-<%--</form>--%>
+<h3><c:out value="${ error }" /></h3>
+
 <form:form action="/expense/new" method="POST" modelAttribute="expense">
     <p>
         <form:label path="amount">limit Money</form:label>
@@ -40,6 +25,13 @@
         <form:label path="date">date</form:label>
         <form:errors path="date"/>
         <form:input  path="date" type="date"/>
+    </p>
+    <p>
+    <form:select  path="category">
+        <c:forEach items="${ categories }" var="category">
+            <option value="${ category.id }">${ category.name }</option>
+        </c:forEach>
+    </form:select>
     </p>
     <input type="submit" value="Submit"/>
 </form:form>

@@ -54,6 +54,14 @@ public class Expense {
 
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
@@ -106,7 +114,7 @@ public class Expense {
         return plan;
     }
 
-    public void setPlan(Plan budget) {
+    public void setPlan(Plan plan) {
         this.plan = plan;
     }
     @PrePersist

@@ -81,6 +81,10 @@ public class MainService {
             return null;
         }
     }
+    public void plantoexp(Expense e,Plan p){
+        e.setPlan(p);
+    }
+
     public Income createIncome(Income income) {
         return incomeRepository.save(income);
     }
@@ -113,5 +117,6 @@ public class MainService {
     public LocalDate getLocalDate() {
         return LocalDate.now();
     }
+
 
 }

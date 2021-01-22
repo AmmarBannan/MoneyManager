@@ -13,6 +13,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/incomes">Dashboard</a>
 <h1>${user.username}</h1>
 <form:form action="/plan/new" method="POST" modelAttribute="plan">
     <p>
