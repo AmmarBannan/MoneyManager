@@ -10,3 +10,18 @@ and provide data charts to give the user more understanding and help in setting 
 ## More about Money Manager:
 Money Manager app cares about user experience and security and you can notice as a user the security standards implemented to protect users accounts. on the other hand the designed layout and tabs 
 are user friendly and give users good impression while using app tools.
+
+### Technologies Used:
+- Java Spring
+- JavaScript
+- HTML
+- CSS
+### App Developers:
+- Nidal Dannoon
+- Ammar Bannan
+- Mais Droubi
+### App Screenshots:
+### App Live version:
+Click Here
+
+
