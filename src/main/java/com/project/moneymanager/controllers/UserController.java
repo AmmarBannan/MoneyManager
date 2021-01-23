@@ -29,11 +29,9 @@ public class UserController {
         this.userValidator = userValidator;
     }
 
-    @RequestMapping(value = {"/", "/home"})
-    public String home(Principal principal, Model model) {
-        String username = principal.getName();
-        model.addAttribute("currentUser", userService.findByUsername(username));
-        return "home.jsp";
+    @RequestMapping( "/index")
+    public String index() {
+        return "index.jsp";
     }
 
     @RequestMapping("/registration")
@@ -44,10 +42,10 @@ public class UserController {
     @RequestMapping("/login")
     public String login(@RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model) {
         if(error != null) {
-            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+            model.addAttribute("errorMessage", "Your username and password is invalid!!, Please try again.");
         }
         if(logout != null) {
-            model.addAttribute("logoutMessage", "Logout Successful!");
+            model.addAttribute("logoutMessage", "You have been logged out successfully!");
         }
 
         return "login.jsp";
@@ -63,6 +61,19 @@ public class UserController {
         return "redirect:/login";
     }
 
+//    @RequestMapping("/admin")
+//    public String adminPage(Principal principal, Model model) {
+//        String username = principal.getName();
+//        model.addAttribute("currentUser", userService.findByUsername(username));
+//        return "adminPage.jsp";
+//    }
+
+    @RequestMapping(value = {"/", "/home"})
+    public String home(Principal principal, Model model) {
+        String username = principal.getName();
+        model.addAttribute("currentUser", userService.findByUsername(username));
+        return "Main.jsp";
+    }
 
 
 }

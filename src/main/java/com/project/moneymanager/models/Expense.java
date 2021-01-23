@@ -17,7 +17,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name="expenses")
 public class Expense {

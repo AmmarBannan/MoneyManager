@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "plans")
 public class Plan {
@@ -24,9 +23,9 @@ public class Plan {
     private Long id;
     private String name;
     private int limitz;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start_datez;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end_datez;
     @Column(updatable = false)
     private Date createdAt;
@@ -37,16 +36,8 @@ public class Plan {
     @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY)
     private List<Expense> expenses;
 
-
-    public Plan(){}
-
-//    public Plan(String name, int limitz, Date start_datez, Date end_datez, User user) {
-//        this.name = name;
-//        this.limitz = limitz;
-//        this.start_datez = start_datez;
-//        this.end_datez = end_datez;
-//        this.user = user;
-//    }
+    public Plan() {
+    }
 
     public Long getId() {
         return id;
@@ -111,6 +102,4 @@ public class Plan {
     protected void onUpdate() {
         this.updatedAt = new Date();
     }
-
-
 }

@@ -1,7 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -9,12 +8,12 @@
 <body>
 <a href="/incomes">Dashboard</a>
 <h1>Welcome Page <c:out value="${user.username}"></c:out></h1>
-<h3><c:out value="${ error }" /></h3>
+<h3><c:out value="${ error }"/></h3>
 
 <form:form action="/expense/new" method="POST" modelAttribute="expense">
     <p>
         <form:label path="amount">limit Money</form:label>
-        <form:input type="number" path="amount" class="input" />
+        <form:input type="number" path="amount" class="input"/>
     </p>
     <p>
         <form:label path="description">description</form:label>
@@ -24,14 +23,14 @@
     <p>
         <form:label path="date">date</form:label>
         <form:errors path="date"/>
-        <form:input  path="date" type="date"/>
+        <form:input path="date" type="date"/>
     </p>
     <p>
-    <form:select  path="category">
-        <c:forEach items="${ categories }" var="category">
-            <option value="${ category.id }">${ category.name }</option>
-        </c:forEach>
-    </form:select>
+        <form:select path="category">
+            <c:forEach items="${ categories }" var="category">
+                <option value="${ category.id }">${ category.name }</option>
+            </c:forEach>
+        </form:select>
     </p>
     <input type="submit" value="Submit"/>
 </form:form>

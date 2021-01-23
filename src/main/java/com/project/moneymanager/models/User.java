@@ -27,7 +27,6 @@ public class User {
     private Long id;
     @Size(min=3, message="Username must be greater than 3 characters")
     private String username;
-
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9.-]+$", message = "Invalid email pattern")
     private String email;
     @Size(min=8, message="Password must be greater than 8 characters")
@@ -55,6 +54,7 @@ public class User {
     public User() {
     }
     
+
 
     public User(String username, String email, String password) {
         this.username = username;
