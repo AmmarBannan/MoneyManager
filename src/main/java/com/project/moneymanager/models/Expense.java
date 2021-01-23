@@ -13,10 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-<<<<<<< HEAD
-=======
 import javax.validation.constraints.NotEmpty;
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 

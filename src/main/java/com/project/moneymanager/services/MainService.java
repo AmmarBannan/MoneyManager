@@ -28,51 +28,6 @@ public class MainService {
         this.categoryRepository = categoryRepository;
     }
 
-<<<<<<< HEAD
-=======
-    public void addExpense(Expense expense) {
-        expenseRepository.save(expense);
-    }
-
-    public void deleteExpense(Long id) {
-        expenseRepository.deleteById(id);
-    }
-
-    public void addIncome(Income income) {
-        incomeRepository.save(income);
-    }
-
-    public void deleteIncome(Long id) {
-        incomeRepository.deleteById(id);
-    }
-
-    public Plan addPlan(Plan plan) {
-        planRepository.save(plan);
-        return plan;
-    }
-
-    public void deletePlan(Long id) {
-        planRepository.deleteById(id);
-    }
-
-    public List<Plan> findAllPlans() {
-        return (List<Plan>) planRepository.findAll();
-    }
-
-    public List<Expense> findAllExpenses() {
-        return (List<Expense>) expenseRepository.findAll();
-    }
-
-    public List<Income> findAllIncomes() {
-        return (List<Income>) incomeRepository.findAll();
-    }
-    public List<Category> findAllCategory() {
-        return (List<Category>) categoryRepository.findAll();
-    }
-//    public void addCategory(Category category) {
-//        categoryRepository.save(category);
-//    }
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
     public Category createCategory(Category b) {
         return categoryRepository.save(b);
     }
@@ -166,6 +121,4 @@ public class MainService {
     public List<Category> findAllCategory() {
         return (List<Category>) categoryRepository.findAll();
     }
-
-
 }

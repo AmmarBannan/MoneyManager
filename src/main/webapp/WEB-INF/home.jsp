@@ -61,7 +61,7 @@
 <%--</body>--%>
 <%--</html>--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -85,11 +85,11 @@
 <a href="/category/new">add category</a>
 <table>
     <thead>
-<<<<<<< HEAD
-    <tr><th>Amount</th><th>description</th><th>date</th></tr>
-=======
-        <tr><th>Amount</th><th>description</th><th>date</th></tr>
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
+    <tr>
+        <th>Amount</th>
+        <th>description</th>
+        <th>date</th>
+    </tr>
     </thead>
     <tbody>
     <c:forEach items="${ incomes }" var="income">
@@ -100,19 +100,21 @@
         </tr>
     </c:forEach>
     </tbody>
-
 </table>
-
 <h3>plan</h3>
 <table>
     <thead>
-    <tr><th>name</th><th>data</th><th>maxlimit</th></tr>
+    <tr>
+        <th>name</th>
+        <th>data</th>
+        <th>maxlimit</th>
+    </tr>
     </thead>
     <tbody>
     <c:forEach items="${ plans }" var="plan">
         <tr>
             <td>${ plan.name }</td>
-            <td>SD/${ plan.start_datez}  ED/${ plan.end_datez}</td>
+            <td>SD/${ plan.start_datez} ED/${ plan.end_datez}</td>
             <td>${ plan.limitz}</td>
         </tr>
     </c:forEach>

@@ -2,30 +2,21 @@ package com.project.moneymanager.validator;
 
 
 import com.project.moneymanager.models.User;
-<<<<<<< HEAD
 import com.project.moneymanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-=======
-
 import java.util.List;
-
-
 import com.project.moneymanager.repositories.UserRepository;
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-
 @Component
 public class UserValidator implements Validator {
-<<<<<<< HEAD
+
     @Autowired
     private UserService userService;
-=======
     private final UserRepository userRepository;
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 
     public UserValidator (UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -62,10 +53,8 @@ public class UserValidator implements Validator {
         }
 
         if (!user.getPasswordConfirmation().equals(user.getPassword())) {
-<<<<<<< HEAD
-            errors.rejectValue("passwordConfirmation", "Diff.user.passwordConfirmation");
-=======
-            errors.rejectValue("passwordConfirmation", "PasswordConfirm");
+           errors.rejectValue("passwordConfirmation", "Diff.user.passwordConfirmation");
+            errors.rejectValue("passwordConfirmation", "passwordConfirmation");
         }
         for (int i = 0; i < allusers.size(); i++) {
             String email = allusers.get(i).getEmail();
@@ -73,7 +62,6 @@ public class UserValidator implements Validator {
                 errors.rejectValue("email", "EmailIsAlreadyThere");
             }
 
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
         }
 
     }

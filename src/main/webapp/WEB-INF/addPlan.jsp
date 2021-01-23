@@ -1,15 +1,5 @@
-<<<<<<< HEAD
-=======
-<%--
-  Created by IntelliJ IDEA.
-  User: pccorner
-  Date: ٢٠/٠١/٢٠٢١
-  Time: ٠٦:٢٣ م
-  To change this template use File | Settings | File Templates.
---%>
->>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <head>
@@ -21,7 +11,7 @@
 <form:form action="/plan/new" method="POST" modelAttribute="plan">
     <p>
         <form:label path="name">name</form:label>
-        <form:input path="name" class="input" />
+        <form:input path="name" class="input"/>
     </p>
     <p>
         <form:label path="limitz">limit Money</form:label>
@@ -31,12 +21,12 @@
     <p>
         <form:label path="start_datez">start date</form:label>
         <form:errors path="start_datez"/>
-        <form:input  path="start_datez" type="date"/>
+        <form:input path="start_datez" type="date"/>
     </p>
     <p>
         <form:label path="end_datez">end date</form:label>
         <form:errors path="end_datez"/>
-        <form:input  path="end_datez" type="date"/>
+        <form:input path="end_datez" type="date"/>
     </p>
 
     <input type="submit" value="Submit"/>
