@@ -29,14 +29,14 @@
                         <tr>
                             <td><form:label path="amount">amount:</form:label></td>
                             <td><form:input path="amount" class="input" /></td>
-<%--                            <td><form:errors path="amount" /></td> --%>
+                                <%--                            <td><form:errors path="amount" /></td> --%>
                         </tr>
                         <tr>
                             <td><form:label path="description">description:</form:label></td>
                             <td><form:input path="description" class="input" /></td>
-<%--                                 <td><form:errors path="de" /></td> --%>
+                                <%--                                 <td><form:errors path="de" /></td> --%>
                         </tr>
-                        
+
                     </table>
                     <div class="buttons has-addons is-centered">
                         <input type="submit" value="Create" class="button" />

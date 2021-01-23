@@ -1,9 +1,6 @@
 package com.project.moneymanager.services;
 
-import com.project.moneymanager.models.Category;
-import com.project.moneymanager.models.Expense;
-import com.project.moneymanager.models.Income;
-import com.project.moneymanager.models.Plan;
+import com.project.moneymanager.models.*;
 import com.project.moneymanager.repositories.*;
 import org.springframework.stereotype.Service;
 
@@ -25,47 +22,6 @@ public class MainService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void addExpense(Expense expense) {
-        expenseRepository.save(expense);
-    }
-
-    public void deleteExpense(Long id) {
-        expenseRepository.deleteById(id);
-    }
-
-    public void addIncome(Income income) {
-        incomeRepository.save(income);
-    }
-
-    public void deleteIncome(Long id) {
-        incomeRepository.deleteById(id);
-    }
-
-    public void addPlan(Plan plan) {
-        planRepository.save(plan);
-    }
-
-    public void deletePlan(Long id) {
-        planRepository.deleteById(id);
-    }
-
-    public List<Plan> findAllPlans() {
-        return (List<Plan>) planRepository.findAll();
-    }
-
-    public List<Expense> findAllExpenses() {
-        return (List<Expense>) expenseRepository.findAll();
-    }
-
-    public List<Income> findAllIncomes() {
-        return (List<Income>) incomeRepository.findAll();
-    }
-    public List<Category> findAllCategory() {
-        return (List<Category>) categoryRepository.findAll();
-    }
-//    public void addCategory(Category category) {
-//        categoryRepository.save(category);
-//    }
     public Category createCategory(Category b) {
         return categoryRepository.save(b);
     }
@@ -93,6 +49,52 @@ public class MainService {
         }else {
             return null;
         }
+    }
+
+    //delete
+    public void deleteExpense(Long id) {
+        expenseRepository.deleteById(id);
+    }
+    public void deletePlan(Long id) {
+        planRepository.deleteById(id);
+    }
+    public void deleteIncome(Long id) {
+        incomeRepository.deleteById(id);
+    }
+    public void deleteRole(Long id) {
+        roleRepository.deleteById(id);
+    }
+
+    //add
+    public void addIncome(Income income) {
+        incomeRepository.save(income);
+    }
+    public void addExpense(Expense expense) {
+        expenseRepository.save(expense);
+    }
+    public Plan addPlan(Plan plan) {
+        planRepository.save(plan);
+        return plan;
+    }
+    public void addRole(Role role ) {
+        roleRepository.save(role);
+    }
+
+    //find all
+    public List<Plan> findAllPlans() {
+        return (List<Plan>) planRepository.findAll();
+    }
+    public List<Expense> findAllExpenses() {
+        return (List<Expense>) expenseRepository.findAll();
+    }
+    public List<Income> findAllIncomes() {
+        return (List<Income>) incomeRepository.findAll();
+    }
+    public List<Role> findAllRoll() {
+        return (List<Role>) roleRepository.findAll();
+    }
+    public List<Category> findAllCategory() {
+        return (List<Category>) categoryRepository.findAll();
     }
 
 

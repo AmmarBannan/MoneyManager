@@ -1,5 +1,7 @@
 package com.project.moneymanager.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,6 +31,7 @@ public class Income {
     private int amount;
     @Size(min = 10, message = "Enter at least 10 Characters...")
     private String description;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date date;
     @Column(updatable=false)
     private Date createdAt;
@@ -71,6 +74,8 @@ public class Income {
     }
 
     public Date getDate() {
+//        Instant date1 = Instant.ofEpochMilli(1549362600000l);
+//        LocalDateTime utc = LocalDateTime.ofInstant(date, ZoneOffset.UTC);
         return date;
     }
 

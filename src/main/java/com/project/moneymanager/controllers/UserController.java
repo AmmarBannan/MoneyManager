@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -27,11 +29,9 @@ public class UserController {
         this.userValidator = userValidator;
     }
 
-    @RequestMapping(value = {"/", "/home"})
-    public String home(Principal principal, Model model) {
-        String username = principal.getName();
-        model.addAttribute("currentUser", userService.findByUsername(username));
-        return "home.jsp";
+    @RequestMapping( "/index")
+    public String index() {
+        return "index.jsp";
     }
 
     @RequestMapping("/registration")
@@ -42,10 +42,10 @@ public class UserController {
     @RequestMapping("/login")
     public String login(@RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model) {
         if(error != null) {
-            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+            model.addAttribute("errorMessage", "Your username and password is invalid!!, Please try again.");
         }
         if(logout != null) {
-            model.addAttribute("logoutMessage", "Logout Successful!");
+            model.addAttribute("logoutMessage", "You have been logged out successfully!");
         }
         return "login.jsp";
     }
@@ -67,19 +67,14 @@ public class UserController {
 //        return "adminPage.jsp";
 //    }
 
+    @RequestMapping(value = {"/", "/home"})
+    public String home(Principal principal, Model model) {
+        String username = principal.getName();
+        model.addAttribute("currentUser", userService.findByUsername(username));
+        return "Main.jsp";
+    }
 
-    @RequestMapping("/incomes/new")
-    public String newIncome(@ModelAttribute("income") Income income) {
-        return "newIncome.jsp";
-    }
-    @RequestMapping(value="/incomes", method= RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("income") Income income, BindingResult result) {
-        if (result.hasErrors()) {
-            return "newIncome.jsp";
-        } else {
-            mainService.createIncome(income);
-            return "redirect:/incomes";
-        }
-    }
+
+
 
 }
