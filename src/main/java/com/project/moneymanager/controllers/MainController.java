@@ -290,4 +290,110 @@ public class MainController {
         mainService.createCategory(category);
         return "redirect:/incomes";
     }
+    @RequestMapping("/user")
+    public String edituser(Principal principal, @ModelAttribute("user") User user, Model model) {
+        model.addAttribute("username",principal.getName());
+
+        return "addcategory.jsp";
+    }
+    @RequestMapping(value={"/edit","/edit/{aa}/{id}"})
+    public String edit(Principal principal,
+                       @PathVariable("aa") String test,
+                       @PathVariable("id") Long id,
+                       @ModelAttribute("income") Income income,
+                       @ModelAttribute("plan") Plan plan,
+                       @ModelAttribute("expense") Expense expense,
+                       Model model,RedirectAttributes rAttributes) {
+        User user = userService.findUserByUsername(principal.getName());
+        List<Income> incomes=user.getIncomes();
+        List<Plan> plans=user.getPlans();
+        List<Expense> expenses=null;
+        for (Plan pland : plans) {
+            if(expenses==null) {
+                expenses = pland.getExpenses();
+            }
+            else{
+                for(Expense i:pland.getExpenses())
+                    expenses.add(i);
+            }
+        }
+        if(incomes==null){rAttributes.addFlashAttribute("errori","this field is empty");}
+        if(plans==null){rAttributes.addFlashAttribute("errorp","this field is empty");}
+        if(expenses==null){rAttributes.addFlashAttribute("errore","this field is empty");}
+        int testa=1;
+        if(test=="i"){
+            model.addAttribute("income",mainService.incomeid(id)) ;
+            testa=1;
+        }
+        else if(test=="p"){
+            model.addAttribute("plan",mainService.planid(id)) ;
+            testa=0;
+        }
+        else if(test=="e"){
+            model.addAttribute("expense",mainService.expenseid(id)) ;
+            testa=-1;
+        }
+
+        model.addAttribute("testa",testa);
+        model.addAttribute("username",principal.getName());
+        model.addAttribute("incomes",incomes);
+        model.addAttribute("plans",plans);
+        model.addAttribute("expenses",expenses);
+        model.addAttribute("categories",mainService.findAllCategory());
+        return "edit.jsp";
+    }
+
+
+    @RequestMapping(value="/editincome/{id}",method = RequestMethod.POST)
+    public String editicome(Principal principal, @Valid@ModelAttribute("income") Income income,
+                            @PathVariable("id") Long id,
+                            BindingResult result) {
+        if(result.hasErrors()){
+            return "redirect:/edit.jsp";
+        }
+        Income inc=mainService.incomeid(id);
+        inc=income;
+//        mainService.updateIncome(inc);
+        return "redrect:/edit";
+    }
+    @RequestMapping(value="/editplan/{id}",method = RequestMethod.POST)
+    public String editplan(Principal principal, @Valid@ModelAttribute("plan") Plan plan,
+                            @PathVariable("id") Long id,
+                            BindingResult result) {
+        if(result.hasErrors()){
+            return "redirect:/edit.jsp";
+        }
+        Plan pl=mainService.planid(id);
+        pl=plan;
+        return "redrect:/edit";
+    }
+    @RequestMapping(value="/editexpense/{id}",method = RequestMethod.POST)
+    public String editexpense(Principal principal, @Valid@ModelAttribute("expense") Expense expense,
+                           @PathVariable("id") Long id,
+                           BindingResult result) {
+        if(result.hasErrors()){
+            return "redirect:/edit.jsp";
+        }
+        Expense exp=mainService.expenseid(id);
+        exp=expense;
+        return "redrect:/edit";
+    }
+
+
+    @RequestMapping("/delete/{aa}/{id}")
+    public String edituser(Principal principal, @ModelAttribute("user") User user ,
+                           @PathVariable("aa") String test,
+                           @PathVariable("id") Long id) {
+
+        if(test=="i"){
+            mainService.deleteIncome(id);
+        }
+        else if(test=="p"){
+            mainService.deletePlan(id); ;
+        }
+        else if(test=="e"){
+            mainService.deleteExpense(id); ;
+        }
+        return "redirect:/edit";
+    }
 }

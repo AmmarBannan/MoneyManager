@@ -2,14 +2,9 @@ package com.project.moneymanager.services;
 
 import com.project.moneymanager.models.*;
 import com.project.moneymanager.repositories.*;
-import org.apache.tomcat.util.http.ConcurrentDateFormat;
-import org.eclipse.jdt.internal.compiler.ast.SwitchStatement;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -116,6 +111,16 @@ public class MainService {
     }
     public LocalDate getLocalDate() {
         return LocalDate.now();
+    }
+
+    public Income incomeid(Long id){
+        return incomeRepository.findById(id).orElse(null);
+    }
+    public Plan planid(Long id){
+        return planRepository.findById(id).orElse(null);
+    }
+    public Expense expenseid(Long id){
+        return expenseRepository.findById(id).orElse(null);
     }
 
 

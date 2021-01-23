@@ -21,16 +21,17 @@
 <a href="/expense/new">add expense</a>
 <a href="/history">history</a>
 <a href="/category/new">add category</a>
+<a href="/edit/i/1">edit</a>
 <table>
     <thead>
-        <tr><th>Amount</th><th>description</th><th>date</th></tr>
+        <tr><th>description</th><th>date</th><th>Amount</th></tr>
     </thead>
     <tbody>
     <c:forEach items="${ incomes }" var="income">
         <tr>
-            <td>${ income.amount }</td>
             <td>${ income.description}</td>
             <td>${ income.createdAt}</td>
+            <td>${ income.amount }</td>
         </tr>
     </c:forEach>
     </tbody>
