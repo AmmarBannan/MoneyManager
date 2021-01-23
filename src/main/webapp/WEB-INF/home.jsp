@@ -85,7 +85,11 @@
 <a href="/category/new">add category</a>
 <table>
     <thead>
+<<<<<<< HEAD
     <tr><th>Amount</th><th>description</th><th>date</th></tr>
+=======
+        <tr><th>Amount</th><th>description</th><th>date</th></tr>
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
     </thead>
     <tbody>
     <c:forEach items="${ incomes }" var="income">

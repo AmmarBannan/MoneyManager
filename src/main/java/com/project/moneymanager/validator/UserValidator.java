@@ -1,26 +1,44 @@
 package com.project.moneymanager.validator;
 
+
 import com.project.moneymanager.models.User;
+<<<<<<< HEAD
 import com.project.moneymanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+
+import java.util.List;
+
+
+import com.project.moneymanager.repositories.UserRepository;
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+
 @Component
 public class UserValidator implements Validator {
+<<<<<<< HEAD
     @Autowired
     private UserService userService;
+=======
+    private final UserRepository userRepository;
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 
+    public UserValidator (UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports (Class<?> clazz) {
         return User.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object object, Errors errors) {
-        User user = (User) object;
+    public void validate (Object target, Errors errors) {
+        User user = (User) target;
+        List <User> allusers = (List<User>) userRepository.findAll();
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         if (user.getUsername().length() < 3 || user.getUsername().length() > 32) {
@@ -44,7 +62,18 @@ public class UserValidator implements Validator {
         }
 
         if (!user.getPasswordConfirmation().equals(user.getPassword())) {
+<<<<<<< HEAD
             errors.rejectValue("passwordConfirmation", "Diff.user.passwordConfirmation");
+=======
+            errors.rejectValue("passwordConfirmation", "PasswordConfirm");
+        }
+        for (int i = 0; i < allusers.size(); i++) {
+            String email = allusers.get(i).getEmail();
+            if (email.equals(user.getEmail())) {
+                errors.rejectValue("email", "EmailIsAlreadyThere");
+            }
+
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
         }
 
     }

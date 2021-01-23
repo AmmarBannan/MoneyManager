@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+<%--
+  Created by IntelliJ IDEA.
+  User: Ammar
+  Date: 1/23/2021
+  Time: 12:29 AM
+  To change this template use File | Settings | File Templates.
+--%>
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -16,4 +26,8 @@
     <input type="submit" value="Submit"/>
 </form:form>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d

@@ -80,4 +80,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 }

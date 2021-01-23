@@ -47,6 +47,7 @@ public class UserController {
         if(logout != null) {
             model.addAttribute("logoutMessage", "You have been logged out successfully!");
         }
+
         return "login.jsp";
     }
 
@@ -60,6 +61,7 @@ public class UserController {
         return "redirect:/login";
     }
 
+<<<<<<< HEAD
 //    @RequestMapping("/admin")
 //    public String adminPage(Principal principal, Model model) {
 //        String username = principal.getName();
@@ -73,6 +75,9 @@ public class UserController {
         model.addAttribute("currentUser", userService.findByUsername(username));
         return "Main.jsp";
     }
+=======
+
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 
 
 

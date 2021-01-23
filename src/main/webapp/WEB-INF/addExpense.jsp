@@ -27,11 +27,19 @@
         <form:input  path="date" type="date"/>
     </p>
     <p>
+<<<<<<< HEAD
         <form:select  path="category">
             <c:forEach items="${ categories }" var="category">
                 <option value="${ category.id }">${ category.name }</option>
             </c:forEach>
         </form:select>
+=======
+    <form:select  path="category">
+        <c:forEach items="${ categories }" var="category">
+            <option value="${ category.id }">${ category.name }</option>
+        </c:forEach>
+    </form:select>
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
     </p>
     <input type="submit" value="Submit"/>
 </form:form>

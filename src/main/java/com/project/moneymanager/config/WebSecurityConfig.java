@@ -10,16 +10,60 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
+//@Configuration
+//@EnableWebSecurity
+//public class WebSecurityConfig {
+//extends WebSecurityConfigurerAdapter 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.
+//                authorizeRequests()
+//                .antMatchers("/css/**", "/js/**", "/registration").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+////                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
+//    }
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+//        @Bean
+//        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//            return new BCryptPasswordEncoder();
+//        }
+//
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.
+//                    authorizeRequests()
+//                    .antMatchers("/css/**", "/js/**", "/registration").permitAll()
+//                    .anyRequest().authenticated()
+//                    .and()
+//                    .formLogin()
+//                    .loginPage("/login")
+//                    .permitAll()
+//                    .and()
+//                    .logout()
+//                    .permitAll();
+//        }
+//        private UserDetailsService userDetailsService;
+//
+//        public WebSecurityConfig(UserDetailsService userDetailsService) {
+//            this.userDetailsService = userDetailsService;
+//        }
+//
+//    }
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsService userDetailsService;
-
-    public WebSecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
+    // add Bcyrpt bean
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/registration").permitAll()
+                .antMatchers("/static/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -39,9 +83,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
+<<<<<<< HEAD
 
    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+=======
+>>>>>>> b59787f4103aa518a01d69b83b5af0496316177d
 }
