@@ -197,7 +197,6 @@ public class MainController {
         mainService.createCategory(category);
         return "redirect:/incomes";
     }
-<<<<<<< HEAD
     @RequestMapping("/user")
     public String edituser(Principal principal, @ModelAttribute("user") User user, Model model) {
         model.addAttribute("username",principal.getName());
@@ -305,6 +304,4 @@ public class MainController {
         return "redirect:/edit";
     }
 }
-=======
-}
->>>>>>> f2f239787e7656643ce311b79cfb27931ae09cff
+

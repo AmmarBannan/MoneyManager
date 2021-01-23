@@ -71,7 +71,7 @@ public class MainService {
         return LocalDate.now();
     }
 
-<<<<<<< HEAD
+
     public Income incomeid(Long id){
         return incomeRepository.findById(id).orElse(null);
     }
@@ -82,7 +82,7 @@ public class MainService {
         return expenseRepository.findById(id).orElse(null);
     }
 
-=======
+
     //delete
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
@@ -96,7 +96,7 @@ public class MainService {
     public void deleteRole(Long id) {
         roleRepository.deleteById(id);
     }
->>>>>>> f2f239787e7656643ce311b79cfb27931ae09cff
+
 
     //add
     public void addIncome(Income income) {

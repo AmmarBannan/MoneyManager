@@ -86,15 +86,13 @@
 <a href="/edit/i/1">edit</a>
 <table>
     <thead>
-<<<<<<< HEAD
-        <tr><th>description</th><th>date</th><th>Amount</th></tr>
-=======
+
     <tr>
         <th>Amount</th>
         <th>description</th>
         <th>date</th>
     </tr>
->>>>>>> f2f239787e7656643ce311b79cfb27931ae09cff
+
     </thead>
     <tbody>
     <c:forEach items="${ incomes }" var="income">
