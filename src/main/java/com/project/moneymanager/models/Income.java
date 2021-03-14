@@ -3,33 +3,17 @@ package com.project.moneymanager.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name="incomes")
 public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    private int amount;
-    @Size(min = 10, message = "Enter at least 10 Characters...")
+    private Integer amount;
+    @Size(min = 3, message = "Enter at least 3 Characters...")
     private String description;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date date;
@@ -43,10 +27,15 @@ public class Income {
     public Income() {
     }
 
-    public Income(int amount, String description, Date date) {
+    public Income(Integer amount, String description, Date date) {
         this.amount = amount;
         this.description = description;
         this.date = date;
+    }
+
+
+    public Integer getAmount() {
+        return amount;
     }
 
     public Long getId() {
@@ -57,11 +46,7 @@ public class Income {
         this.id = id;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -74,8 +59,6 @@ public class Income {
     }
 
     public Date getDate() {
-//        Instant date1 = Instant.ofEpochMilli(1549362600000l);
-//        LocalDateTime utc = LocalDateTime.ofInstant(date, ZoneOffset.UTC);
         return date;
     }
 

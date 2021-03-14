@@ -9,11 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
+
 import java.util.*;
 
 @Controller
@@ -28,46 +31,99 @@ public class MainController {
 
     @RequestMapping("/incomes/new")
     public String displayIncomeCreation(Principal principal, @ModelAttribute("income") Income myincome, Model model) {
-//        if (principal.getName()!=null) {
         User user = userService.findUserByUsername(principal.getName());
         model.addAttribute("user", user);
+
         return "newIncome.jsp";
-//        } else {
-//            return "redirect:/";
-//        }
     }
 
     @RequestMapping(value = "/incomes/new", method = RequestMethod.POST)
-    public String createNewIncome(Principal principal, @Valid @ModelAttribute("income") Income myincome, BindingResult result, Model model, RedirectAttributes limitError) {
+    public String createNewIncome(Principal principal, @Valid @ModelAttribute("income") Income myincome, BindingResult result, Model model) {
         User user = userService.findUserByUsername(principal.getName());
-        model.addAttribute("user", user);
         if (result.hasErrors()) {
             return "newIncome.jsp";
         } else {
-            Income newIncome = mainService.createIncome(myincome);
-            newIncome.setUser(user);
-            mainService.createIncome(newIncome);
+            mainService.addIncome(user,myincome);
             return "redirect:/incomes";
         }
     }
 
     @RequestMapping("/incomes")
-    public String homepage(Principal principal, Model model) {
+    public String homepage(Principal principal, Model model,@ModelAttribute("note") Note note, @ModelAttribute("category") Category category,BindingResult result) {
         User user = userService.findUserByUsername(principal.getName());
+        Balance balance=null;
+        if(user.getBalances().size()<1){
+            balance=new Balance(user,0);
+        }
+        else {
+            balance = mainService.getlastbalance(user);
+        }
+        /////////////////////////////////
+        Integer[] values=new Integer[user.getBalances().size()];
+
+
+        int[] dates=new int[user.getBalances().size()];
+        int j=0;
+        for(Balance bal:user.getBalances()){
+            values[j]=bal.getVal();
+            dates[j]=j;
+            j++;
+        }
+
+        ///////////////////////////////
+        String[] categories=new String[user.getCategories().size()];
+        int[] persent=new int[user.getCategories().size()];
+        int i=0;
+        for(Category cat:user.getCategories()){
+            categories[i]=cat.getName();
+            for(int tt:persent){
+                persent[i]=0;
+            }
+            for(Expense exp:cat.getExpenses()){
+                persent[i]=exp.getAmount();
+            }
+            i++;
+        }
+
+
+//        System.out.println(dates);
+//        System.out.println();
+        System.out.println("categories///////////////////////////////////");
+//        for(int d=0;d<categories.length;d++){
+//            System.out.println(categories[i]);
+//            System.out.println(persent[i]);
+//        }
+        List<Balance> balances = user.getBalances();
+        model.addAttribute("balances", balances);
+
         model.addAttribute("currentUser", user);
         model.addAttribute("incomes", user.getIncomes());
         model.addAttribute("plans", user.getPlans());
-        int total = 0;
-        for (Income i : mainService.getAllIncomes()) {
-            total += i.getAmount();
-        }
-        for (Expense i : mainService.findAllExpenses()) {
-            total -= i.getAmount();
-        }
-        model.addAttribute("balance", total);
+
+
+        model.addAttribute("notes",user.getNotes());
+        model.addAttribute("balance",balance.getVal() );
+
+        model.addAttribute("dates",dates);
+        model.addAttribute("values",values);
+
+        model.addAttribute("categories",categories);
+        model.addAttribute("persent",persent);
 
         return "home.jsp";
+
     }
+
+    @RequestMapping(value = "/newnote",method = RequestMethod.POST)
+    public String newnote(Principal principal,@Valid@ModelAttribute("note") Note note,BindingResult result) {
+        if(result.hasErrors()){
+            return "redirect:/incomes";
+        }
+        User user = userService.findUserByUsername(principal.getName());
+        mainService.createnote(user,note);
+        return "redirect:/incomes";
+    }
+
     //    @RequestMapping("/incomes/{id}")
 //    public String displayIncome(Model model, HttpSession session, @PathVariable("id") Long incomeId) {
 //        Income income = mainService.findIncome(incomeId);
@@ -136,23 +192,33 @@ public class MainController {
     }
 
     @RequestMapping(value = "/expense/new", method = RequestMethod.POST)
-    public String createexpenses(Principal principal, @ModelAttribute("expense") Expense expense, RedirectAttributes rAttributes) {
+    public String createexpenses(Principal principal, @Valid@ModelAttribute("expense") Expense expense, RedirectAttributes rAttributes) {
         User user = userService.findUserByUsername(principal.getName());
         for (Plan plan : user.getPlans()) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd ");
             String today = df.format(Calendar.getInstance().getTime());
-            Date tdy = expense.getCreatedAt();
-            Date date = Calendar.getInstance().getTime();
+//            Date tdy = expense.getCreatedAt();
+//            Date date = Calendar.getInstance().getTime();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
             String strDate = dateFormat.format(plan.getStart_datez());
 
             if (today.compareTo(strDate) > 0) {
                 expense.setPlan(plan);
-                mainService.addExpense(expense);
+                mainService.addExpense(user,expense);
                 System.out.println("expense added to plan");
                 return "redirect:/incomes";
             }
         }
+        if(expense.getAmount()>expense.getPlan().getLimitz()) {
+            rAttributes.addFlashAttribute("amounterrror","your expense have  exceeded your plan");
+            return "redirect:/incomes";
+        }
+        if(expense.getAmount()>expense.getPlan().getLimitz()) {
+            rAttributes.addFlashAttribute("amounterrror","your expense have  exceeded your plan");
+            return "redirect:/incomes";
+        }
+
+        mainService.addExpense(user,expense);
         rAttributes.addFlashAttribute("error", "there is no plan to add");
         return "redirect:/expense/new";
     }
@@ -177,23 +243,21 @@ public class MainController {
         return "history.jsp";
     }
 
-    @RequestMapping("/category/new")
-    public String newcategory(Principal principal, @ModelAttribute("category") Category category, Model model) {
-        model.addAttribute("username", principal.getName());
-        return "addcategory.jsp";
-    }
 
     @RequestMapping(value = "/category/new", method = RequestMethod.POST)
-    public String craeateategory(Principal principal, @Valid @ModelAttribute("category") Category category, BindingResult result, Model model) {
+    public String craeateategory(Principal principal, @Valid @ModelAttribute("category") Category category, BindingResult result,
+                                 Model model,RedirectAttributes rAttributes) {
+        User user = userService.findUserByUsername(principal.getName());
         if (result.hasErrors()) {
             return "addcategory.jsp";
         }
-//        for(Category cat:mainService.findAllCategory()){
-//            if(category.getName()==cat.getName()){
-//                rAttributes.addFlashAttribute("error", "name already exists");
-//                return "redirect:/category/new";
-//            }
-//        }
+        for(Category cat:mainService.findAllCategory()){
+            if(category.getName()==cat.getName()){
+                rAttributes.addFlashAttribute("error", "name already exists");
+                return "redirect:/category/new";
+            }
+        }
+        category.setUser(user);
         mainService.createCategory(category);
         return "redirect:/incomes";
     }
@@ -203,13 +267,18 @@ public class MainController {
 
         return "addcategory.jsp";
     }
-    @RequestMapping(value={"/edit","/edit/{aa}/{id}"})
+
+
+    ////////edit
+    @RequestMapping("/edit/{aa}/{id}")
     public String edit(Principal principal,
                        @PathVariable("aa") String test,
                        @PathVariable("id") Long id,
                        @ModelAttribute("income") Income income,
                        @ModelAttribute("plan") Plan plan,
                        @ModelAttribute("expense") Expense expense,
+                       @ModelAttribute("cate") Category cate,
+                       BindingResult result,
                        Model model,RedirectAttributes rAttributes) {
         User user = userService.findUserByUsername(principal.getName());
         List<Income> incomes=user.getIncomes();
@@ -228,28 +297,35 @@ public class MainController {
         if(plans==null){rAttributes.addFlashAttribute("errorp","this field is empty");}
         if(expenses==null){rAttributes.addFlashAttribute("errore","this field is empty");}
         int testa=1;
-        if(test=="i"){
-            model.addAttribute("income",mainService.incomeid(id)) ;
-            testa=1;
-        }
-        else if(test=="p"){
-            model.addAttribute("plan",mainService.planid(id)) ;
+        if(test.equals("i")){
             testa=0;
-        }
-        else if(test=="e"){
-            model.addAttribute("expense",mainService.expenseid(id)) ;
-            testa=-1;
-        }
+            model.addAttribute("income",mainService.incomeid(id)) ;
 
+        }
+        else if(test.equals("p")){
+            testa=1;
+            model.addAttribute("plan",mainService.planid(id)) ;
+
+        }
+        else if(test.equals("e")){
+            testa=2;
+            model.addAttribute("expense",mainService.expenseid(id)) ;
+        }
+        else if(test.equals("c")){
+            testa=3;
+            model.addAttribute("category",mainService.categoryid(id)) ;
+        }
+        model.addAttribute("user",user);
         model.addAttribute("testa",testa);
         model.addAttribute("username",principal.getName());
         model.addAttribute("incomes",incomes);
         model.addAttribute("plans",plans);
         model.addAttribute("expenses",expenses);
         model.addAttribute("categories",mainService.findAllCategory());
+        System.out.println(testa);
         return "edit.jsp";
     }
-
+///////response
 
     @RequestMapping(value="/editincome/{id}",method = RequestMethod.POST)
     public String editicome(Principal principal, @Valid@ModelAttribute("income") Income income,
@@ -276,32 +352,58 @@ public class MainController {
     }
     @RequestMapping(value="/editexpense/{id}",method = RequestMethod.POST)
     public String editexpense(Principal principal, @Valid@ModelAttribute("expense") Expense expense,
-                           @PathVariable("id") Long id,
-                           BindingResult result) {
+                           @PathVariable("id") Long id, BindingResult result) {
         if(result.hasErrors()){
-            return "redirect:/edit.jsp";
+            return "redirect:edit.jsp";
         }
         Expense exp=mainService.expenseid(id);
         exp=expense;
         return "redrect:/edit";
     }
-
-
-    @RequestMapping("/delete/{aa}/{id}")
-    public String edituser(Principal principal, @ModelAttribute("user") User user ,
-                           @PathVariable("aa") String test,
-                           @PathVariable("id") Long id) {
-
-        if(test=="i"){
-            mainService.deleteIncome(id);
+    @RequestMapping(value="/editcat/{id}",method = RequestMethod.POST)
+    public String editplan(Principal principal, @Valid@ModelAttribute("cate") Category cate,
+                           @PathVariable("id") Long id,
+                           BindingResult result) {
+        if(result.hasErrors()){
+            return "redirect:/edit.jsp";
         }
-        else if(test=="p"){
-            mainService.deletePlan(id); ;
-        }
-        else if(test=="e"){
-            mainService.deleteExpense(id); ;
-        }
-        return "redirect:/edit";
+        Category category=mainService.categoryid(id);
+        category=cate;
+        return "redrect:/edit";
     }
+
+
+//////////////////////////delete
+
+
+
+    @RequestMapping("/deletecat/{id}")
+    public String dc(Principal principal, @PathVariable("id") Long id) {
+
+        mainService.deleteCategory(id);
+        return "redrect:/edit/i/1";
+    }
+    @RequestMapping("/deleteexpense/{id}")
+    public String dex(Principal principal, @PathVariable("id") Long id) {
+        User user = userService.findUserByUsername(principal.getName());
+        mainService.deleteExpense(user,id);
+        return "redrect:/edit/i/1";
+    }
+    @RequestMapping("/deleteplan/{id}")
+    public String deleteplan(Principal principal, @PathVariable("id") Long id) {
+        mainService.deletePlan(id);
+        return "redrect:/edit/i/1";
+    }
+    @RequestMapping("/deleteincome/{id}")
+    public String dincome(Principal principal, @PathVariable("id") Long id) {
+        User user = userService.findUserByUsername(principal.getName());
+        mainService.deleteIncome(user,id);
+        return "redrect:/edit/i/1";
+    }
+
+
+
+
+
 }
 

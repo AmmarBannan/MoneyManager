@@ -27,6 +27,10 @@ public class Category {
     @OneToMany(mappedBy="category", fetch = FetchType.LAZY)
     private List<Expense> expenses;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Category() {
     }
 
@@ -72,6 +76,14 @@ public class Category {
 
     public void setExpenses(List<Expense> expenses) {
         this.expenses = expenses;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @PrePersist

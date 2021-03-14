@@ -14,13 +14,17 @@ public class MainService {
     private final IncomeRepository incomeRepository;
     private final ExpenseRepository expenseRepository;
     private final CategoryRepository categoryRepository;
+    private final Balancerepo balacerepo;
+    private final NoteRepo noterepo;
 
-    public MainService(PlanRepository planRepository, RoleRepository roleRepository, IncomeRepository incomeRepository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
+    public MainService( NoteRepo noterepo,Balancerepo balacerepo,PlanRepository planRepository, RoleRepository roleRepository, IncomeRepository incomeRepository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
         this.planRepository = planRepository;
         this.roleRepository = roleRepository;
         this.incomeRepository = incomeRepository;
         this.expenseRepository = expenseRepository;
         this.categoryRepository = categoryRepository;
+        this.balacerepo=balacerepo;
+        this.noterepo=noterepo;
     }
 
     public Category createCategory(Category b) {
@@ -38,22 +42,11 @@ public class MainService {
         e.setPlan(p);
     }
 
-    public Income createIncome(Income income) {
-        return incomeRepository.save(income);
-    }
     public void updateIncome(Income income) {
         incomeRepository.save(income);
     }
     public List<Income> getAllIncomes() {
         return (List<Income>) incomeRepository.findAll();
-    }
-    public Income findIncome(Long id) {
-        Optional<Income> income = incomeRepository.findById(id);
-        if (income.isPresent()) {
-            return income.get();
-        }else {
-            return null;
-        }
     }
     //connection
     public Plan findplanbydate(User user, Date d){
@@ -71,7 +64,7 @@ public class MainService {
         return LocalDate.now();
     }
 
-
+//finding
     public Income incomeid(Long id){
         return incomeRepository.findById(id).orElse(null);
     }
@@ -81,29 +74,33 @@ public class MainService {
     public Expense expenseid(Long id){
         return expenseRepository.findById(id).orElse(null);
     }
-
+    public Category categoryid(Long id){return categoryRepository.findById(id).orElse(null);}
 
     //delete
-    public void deleteExpense(Long id) {
-        expenseRepository.deleteById(id);
-    }
+    public void deleteExpense(User user,Long id) { this.transaction(user);expenseRepository.deleteById(id); }
+    public void deleteIncome(User u,Long id) { this.transaction(u);incomeRepository.deleteById(id); }
+
     public void deletePlan(Long id) {
         planRepository.deleteById(id);
     }
-    public void deleteIncome(Long id) {
-        incomeRepository.deleteById(id);
-    }
+    public void deleteCategory(Long id) { categoryRepository.deleteById(id); }
+
     public void deleteRole(Long id) {
         roleRepository.deleteById(id);
     }
 
 
+
     //add
-    public void addIncome(Income income) {
-        incomeRepository.save(income);
+    public Income addIncome(User u,Income income) {
+        income.setUser(u);
+        this.transaction(u);
+        return incomeRepository.save(income);
+
     }
-    public void addExpense(Expense expense) {
-        expenseRepository.save(expense);
+    public Expense addExpense(User u,Expense expense) {
+        this.transaction(u);
+        return expenseRepository.save(expense);
     }
     public Plan addPlan(Plan plan) {
         planRepository.save(plan);
@@ -129,4 +126,76 @@ public class MainService {
     public List<Category> findAllCategory() {
         return (List<Category>) categoryRepository.findAll();
     }
+
+    //add to balance
+    public Balance adding(User u,int d){
+        int x=0;
+       for(Balance b:u.getBalances()){
+           if(b==null){
+               x=b.getVal();
+           }
+       }
+        Balance bal=new Balance(u,d+x);
+        balacerepo.save(bal);
+        return bal;
+    }
+    public Balance taking(User u,int d){
+        int x=0;
+        for(Balance b:u.getBalances()){
+            if(b==null){
+                x=b.getVal();
+            }
+        }
+        Balance bal=new Balance(u,x-d);
+        balacerepo.save(bal);
+        return bal;
+    }
+    public Balance getlastbalance(User u){
+        Balance bal=null;
+        for(Balance b:u.getBalances()){
+            bal=b;
+        }
+        if(bal==null){
+            bal=new Balance(u,0);
+            balacerepo.save(bal);
+        }
+
+        return  bal;
+    }
+
+    public Balance transaction(User u){
+        if(u.getBalances().size()<1){
+            Balance balance=new Balance(u,0);
+            balacerepo.save(balance);
+            return balance;
+        }
+        else {
+            int total = 0;
+            for (Income i : this.getAllIncomes()) {
+                total += i.getAmount();
+            }
+            for (Expense i : this.findAllExpenses()) {
+                total -= i.getAmount();
+            }
+            Balance bal = new Balance(u, total);
+            balacerepo.save(bal);
+            return bal;
+        }
+    }
+    //add note
+    public Note createnote(User u,Note note){
+        note.setUser(u);
+        noterepo.save(note);
+        return note;
+    }
+    public void deletenote(Note note){
+        noterepo.delete(note);
+    }
+    public Note editnote(Note n,String str){
+        n.setDescription(str);
+        return n;
+    }
+
+
+
 }

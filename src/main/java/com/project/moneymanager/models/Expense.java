@@ -3,19 +3,9 @@ package com.project.moneymanager.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name="expenses")
@@ -52,6 +42,7 @@ public class Expense {
         this.plan=plan;
 
     }
+
 
     public Category getCategory() {
         return category;

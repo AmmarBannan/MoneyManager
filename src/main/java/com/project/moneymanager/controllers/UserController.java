@@ -1,6 +1,5 @@
 package com.project.moneymanager.controllers;
 
-import com.project.moneymanager.models.Income;
 import com.project.moneymanager.models.User;
 import com.project.moneymanager.services.MainService;
 import com.project.moneymanager.services.UserService;
@@ -8,13 +7,14 @@ import com.project.moneymanager.validator.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -68,11 +68,11 @@ public class UserController {
 //        return "adminPage.jsp";
 //    }
 
-    @RequestMapping(value = {"/", "/home"})
+    @RequestMapping("/home")
     public String home(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("currentUser", userService.findByUsername(username));
-        return "Main.jsp";
+        return "home.jsp";
     }
 
 

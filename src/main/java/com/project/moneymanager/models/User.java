@@ -1,23 +1,10 @@
 package com.project.moneymanager.models;
 
-import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
-
-import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -50,7 +37,15 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Plan> plans;
-
+//balance
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<Balance> balances;
+//note
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Note> notes;
+//category
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<Category> categories;
     public User() {
     }
     
@@ -60,6 +55,23 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Balance> getBalances() {
+
+        return balances;
+    }
+
+    public void setBalances(List<Balance> balances) {
+        this.balances = balances;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     public Long getId() {
@@ -140,6 +152,14 @@ public class User {
 
     public void setPlans(List<Plan> plans) {
         this.plans = plans;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     @PrePersist

@@ -28,11 +28,13 @@
                     <table>
                         <tr>
                             <td><form:label path="amount">amount:</form:label></td>
-                            <td><form:input path="amount" class="input"/></td>
+                            <form:errors path="amount"/>
+                            <td><form:input path="amount" type="number" class="input"/></td>
                                 <%--                            <td><form:errors path="amount" /></td> --%>
                         </tr>
                         <tr>
                             <td><form:label path="description">description:</form:label></td>
+                            <form:errors path="description"/>
                             <td><form:input path="description" class="input"/></td>
                                 <%--                                 <td><form:errors path="de" /></td> --%>
                         </tr>
